@@ -1,0 +1,16 @@
+# Jak wymusić użycie GPU w hashcat:
+
+# Opcja 1: Wymuś tylko GPU NVIDIA (device #1)
+hashcat -m 22000 -a3 --session start hash.hc22000 --increment --increment-min 8 --increment-max 10 -1 0123456789. -d 1 ?1?1?1?1?1?1?1?1?1?1
+
+# Opcja 2: Wyłącz CPU (device #2)
+hashcat -m 22000 -a3 --session start hash.hc22000 --increment --increment-min 8 --increment-max 10 -1 0123456789. -D 1 ?1?1?1?1?1?1?1?1?1?1
+
+# Opcja 3: Kombinacja - tylko CUDA (nie OpenCL CPU)
+hashcat -m 22000 -a3 --session start hash.hc22000 --increment --increment-min 8 --increment-max 10 -1 0123456789. -D 2 ?1?1?1?1?1?1?1?1?1?1
+
+Wyjaśnienie parametrów:
+-d 1      = użyj tylko device #1 (NVIDIA RTX 3050)
+-D 1      = użyj tylko OpenCL devices
+-D 2      = użyj tylko CUDA devices (NVIDIA)
+-D 1,2    = użyj OpenCL i CUDA
